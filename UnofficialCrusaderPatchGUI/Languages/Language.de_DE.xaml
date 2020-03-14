@@ -1,0 +1,9 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:String x:Key="Deutsch">Deutsch geladen</system:String>
+    <system:String x:Key="ui_chooseLang">Please choose a language for this setup from the list below.</system:String>
+    <system:String x:Key="ui_search">Search</system:String>
+    <system:String x:Key="ui_pathselection">Path Selection</system:String>
+    <system:String x:Key="ui_Chooselanguage">Choose a language</system:String>
+</ResourceDictionary>
