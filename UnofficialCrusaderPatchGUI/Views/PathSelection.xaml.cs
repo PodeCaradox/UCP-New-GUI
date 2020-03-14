@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using UCP.Helper;
 
 namespace UCP.Views
 {
@@ -20,10 +21,22 @@ namespace UCP.Views
     /// </summary>
     public partial class PathSelection : Window
     {
-        public PathSelection()
+        public PathSelection(String InitPath = null)
         {
             InitializeComponent();
-            
+
+            if (!String.IsNullOrEmpty(InitPath))
+            {
+                pTextBoxPath.Text = InitPath;
+            }
+            this.Closed += WindowClosing;
+        }
+
+        public event EventHandler<CustomEventArgs> GetValueOnClose;
+
+        private void WindowClosing(object sender, EventArgs e)
+        {
+            GetValueOnClose?.Invoke(this, new CustomEventArgs() { Text = pTextBoxPath.Text });
         }
 
         void bPathSearch_Click(object sender, RoutedEventArgs e)
@@ -32,7 +45,7 @@ namespace UCP.Views
             {
                 dialog.ShowNewFolderButton = false;
                 dialog.SelectedPath = Directory.Exists(pTextBoxPath.Text) ? pTextBoxPath.Text : null;
-                dialog.Description = "Bitte wähle dein Stronghold Crusader - Installationsverzeichnis.";
+                dialog.Description = Utility.GetText("ui_InstallFolder");
 
                 var result = dialog.ShowDialog();
                 if (result == System.Windows.Forms.DialogResult.OK)

@@ -12,6 +12,9 @@ using System.Windows.Controls;
 using UCP;
 using UCP.Patching;
 using System.Windows.Media.Imaging;
+using UCP.Views;
+using UCP.Data;
+using UCP.Helper;
 
 namespace UCP
 {
@@ -29,18 +32,27 @@ namespace UCP
 
         public MainWindow()
         {
+            MainViewModel vm = new MainViewModel();
+            this.DataContext = vm;
+
+            Configuration.LoadGeneral();
+            Configuration.LoadChanges();
+
+            #region Select Language
+            LanguageSelection languageSelection = new LanguageSelection();
+            languageSelection.DataContext = vm;
+            languageSelection.ShowDialog();
+            #endregion
+
+            #region SelectPath
+            String path = Utility.CheckCrusaderPath();
+            PathSelection pathSelection = new PathSelection(path);
+            pathSelection.GetValueOnClose += NewPath;
+            pathSelection.ShowDialog();
+            #endregion
 
 
-            //Configuration.LoadGeneral();
-            //Configuration.LoadChanges();
-
-            //// choose language
-            //if (!LanguageWindow.ShowSelection(Configuration.Language))
-            //{
-            //    Close();
-            //    return;
-            //}
-
+            ////Todo Save Language Config
             //if (Configuration.Language != Localization.LanguageIndex)
             //{
             //    Configuration.Language = Localization.LanguageIndex;
@@ -49,38 +61,11 @@ namespace UCP
 
             //// init main window
             //InitializeComponent();
+            this.Title = string.Format("{0} {1}",Utility.GetText("Name"), Version.PatcherVersion);
 
-            //// set title
-            //this.Title = string.Format("{0} {1}", Localization.Get("Name"), Version.PatcherVersion);
-            
-            //if (!Directory.Exists(Configuration.Path))
-            //{
-            //    // check if we can already find the steam path
-            //    const string key = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 40970";
-            //    RegistryKey myKey = Registry.LocalMachine.OpenSubKey(key, false);
-            //    if (myKey != null && myKey.GetValue("InstallLocation") is string path 
-            //        && !string.IsNullOrWhiteSpace(path) && Patcher.CrusaderExists(path))
-            //    {
-            //        pTextBoxPath.Text = path;
-            //    }
-            //    else if (Patcher.CrusaderExists(Environment.CurrentDirectory))
-            //    {
-            //        pTextBoxPath.Text = Environment.CurrentDirectory;
-            //    }
-            //}
-            //else
-            //{
-            //    pTextBoxPath.Text = Configuration.Path;
-            //}
 
-            //// set translated ui elements
-            //pathBox.Text = Localization.Get("ui_searchpath");
-            //pButtonCancel.Content = Localization.Get("ui_cancel");
-            //pButtonContinue.Content = Localization.Get("ui_continue");
-            //pButtonSearch.Content = Localization.Get("ui_search");
-            //pButtonUninstall.Content = Localization.Get("ui_uninstall");
-            //iButtonBack.Content = Localization.Get("ui_back");
-            //iButtonInstall.Content = Localization.Get("ui_install");
+
+       
             //TextReferencer.SetText(linkLabel, Localization.Get("ui_welcometext"));
 
             //var asm = System.Reflection.Assembly.GetExecutingAssembly();
@@ -88,6 +73,16 @@ namespace UCP
             //using (StreamReader sr = new StreamReader(stream))
             //    linkLabel.Inlines.Add("\n\n\n\n\n\n" + sr.ReadToEnd());
         }
+
+
+
+        private void NewPath(object sender, CustomEventArgs e)
+        {
+           
+        }
+
+
+
 
         //#region Path finding
 

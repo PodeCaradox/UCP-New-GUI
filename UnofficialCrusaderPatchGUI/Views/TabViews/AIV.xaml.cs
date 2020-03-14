@@ -10,36 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using static UCP.Utility;
 
-namespace UCP.Views
+namespace UCP.Views.TabViews
 {
     /// <summary>
-    /// Interaktionslogik für LanguageSelection.xaml
+    /// Interaktionslogik für AIV.xaml
     /// </summary>
-    public partial class LanguageSelection : Window
+    public partial class AIV : UserControl
     {
-        public LanguageSelection()
+        public AIV()
         {
             InitializeComponent();
-        }
-
-        private void Accept_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Cancel_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-      
-
-        internal void Closed()
-        {
-          
         }
     }
 }

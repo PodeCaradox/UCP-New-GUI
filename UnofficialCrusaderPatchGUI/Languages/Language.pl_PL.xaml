@@ -2,9 +2,29 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"                    
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
+    <!-- General -->
     <system:String x:Key="Polski">Polski loaded</system:String>
-    <system:String x:Key="ui_chooseLang">Please choose a language for this setup from the list below.</system:String>
-    <system:String x:Key="ui_search">Search</system:String>
+    <system:String x:Key="Name">Nieoficjalna aktualizacja do Krzyżowca</system:String>
+
+    <!-- Language UI -->
+    <system:String x:Key="ui_chooseLangTitle">Wybierz język</system:String>
+    <system:String x:Key="ui_chooseLang">Wybierz język instalatora z poniższej listy.</system:String>
+
+    <!-- Todo Path GUI-->
     <system:String x:Key="ui_pathselection">Path Selection</system:String>
-    <system:String x:Key="ui_Chooselanguage">Choose a language</system:String>
+
+    <system:String x:Key="ui_InstallFolder">Wybierz folder instalacyjny gry Twierdza Krzyżowiec:</system:String>
+    <system:String x:Key="ui_search">Wyszukaj</system:String>
+    
+    <!-- Tabs -->
+    <system:String x:Key="ui_Bugfix">Naprawione błędy</system:String>
+    <system:String x:Key="ui_Ailords">Przeciwnicy komputerowi</system:String>
+    <system:String x:Key="ui_Troops">Jednostki</system:String>
+    <system:String x:Key="ui_Other">Pozostałe</system:String>
+    <system:String x:Key="ui_AIV">AIV</system:String>
+    <system:String x:Key="ui_AIC">AIC</system:String>
+
+    <!-- Bugfixes -->
+    <system:String x:Key="u_fireballistafix">Fire ballistas shoot monks and tunnelers</system:String>
+    <system:String x:Key="u_fireballistafix_descr">Fire ballistas automatically shoot at monks and tunnelers.</system:String>
 </ResourceDictionary>

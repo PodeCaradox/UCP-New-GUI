@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UCP"
         mc:Ignorable="d"
-        Title="Unofficial Patcher" Height="400" Width="500" ResizeMode="NoResize">
+        xmlns:myControls="clr-namespace:UCP.Views.TabViews"
+        Title="{DynamicResource Name}" Height="400" Width="500">
     <Window.Background>
         <ImageBrush ImageSource="../Graphics/background.jpg"
         Viewport="0,0,200,200"
@@ -14,35 +15,38 @@
         Stretch="None"/>
     </Window.Background>
     <Grid>
-        <Image Source="../Graphics/frame.jpg" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="50"/>
-        <Image Source="../Graphics/frame.jpg" Stretch="UniformToFill" HorizontalAlignment="Center" VerticalAlignment="Top" Height="50">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="../Graphics/frame.jpg" Stretch="Fill" HorizontalAlignment="Center" />
+        <Image Grid.Row="2" Source="../Graphics/frame.jpg" Stretch="Fill" HorizontalAlignment="Center" >
             <Image.LayoutTransform>
                 <TransformGroup>
                     <RotateTransform Angle="180"/>
                 </TransformGroup>
             </Image.LayoutTransform>
         </Image>
-        <!--<Grid x:Name="pathGrid" Visibility="Visible" HorizontalAlignment="Left" VerticalAlignment="Top" 
-            Width="{Binding ActualWidth, RelativeSource = {RelativeSource AncestorType = {x:Type Grid}}}"
-            Height="{Binding ActualHeight, RelativeSource ={RelativeSource AncestorType = {x:Type Grid}}}">
-
-            <ScrollViewer Height="180" Margin="0,56,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="470">
-                <TextBlock x:Name="linkLabel" ScrollViewer.VerticalScrollBarVisibility="Auto" TextAlignment="Center" TextWrapping="Wrap" FontSize="14" Background="#CCFFFFFF"/>
-            </ScrollViewer>
-            <Button x:Name="pButtonContinue" Content="Weiter" HorizontalAlignment="Right" Height="30" Margin="0,0,8,14" VerticalAlignment="Bottom" Width="120" Click="pButtonContinue_Click"/>
-            <Button x:Name="pButtonCancel" Content="Abbrechen" HorizontalAlignment="Left" Height="30" Margin="8,0,0,14" VerticalAlignment="Bottom" Width="120" Click="pButtonCancel_Click"/>
-            <Button x:Name="pButtonUninstall" Content="Deinstallieren" HorizontalAlignment="Center" Height="30" Margin="0,0,0,14" VerticalAlignment="Bottom" Width="120" Click="pButtonUninstall_Click"/>
-        </Grid>
-        <Grid x:Name="installGrid" Visibility="Hidden" HorizontalAlignment="Left" VerticalAlignment="Top" 
-            Width="{Binding ActualWidth, RelativeSource = {RelativeSource AncestorType = {x:Type Grid}}}"
-            Height="{Binding ActualHeight, RelativeSource ={RelativeSource AncestorType = {x:Type Grid}}}">
-
-            <TabControl x:Name="tabControl" HorizontalAlignment="Center" Height="238" Margin="0,56,0,0" VerticalAlignment="Top" Width="470" Background="#CCFFFFFF" Focusable="true" SelectionChanged="tabControl_SelectionChanged"/>
-            <ProgressBar x:Name="pbSetup" HorizontalAlignment="Center" Height="19" Margin="0,0,0,53" VerticalAlignment="Bottom" Width="468" Background="#99FFFFFF" Foreground="#FF832708"/>
-            <Button x:Name="iButtonBack" Content="Zurück" HorizontalAlignment="Left" Height="30" Margin="8,0,0,13" VerticalAlignment="Bottom" Width="120" Click="iButtonBack_Click"/>
-            <Button x:Name="iButtonInstall" Content="Installieren" HorizontalAlignment="Right" Height="30" Margin="0,0,8,13" VerticalAlignment="Bottom" Width="120" Click="iButtonInstall_Click"/>
-            <Label x:Name="pbLabel" HorizontalAlignment="Center" Height="40" Margin="0,0,0,43" VerticalAlignment="Bottom" Width="468" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="16"/>
-            <TextBlock x:Name="changeHint" HorizontalAlignment="Center" Height="19" Margin="0,0,0,53" VerticalAlignment="Bottom" Width="468" Background="#99FFFFFF" Foreground="#FF832708" TextAlignment="Center"/>
-        </Grid>-->
+        <TabControl Grid.Row="1" Background="#CCFFFFFF">
+            <TabItem Header="{DynamicResource ui_Bugfix}">
+                <myControls:Bugfixes />
+            </TabItem>
+            <TabItem Header="{DynamicResource ui_Ailords}">
+                <myControls:Ailords />
+            </TabItem>
+            <TabItem Header="{DynamicResource ui_Troops}">
+                <myControls:Troops />
+            </TabItem>
+            <TabItem Header="{DynamicResource ui_Other}">
+                <myControls:Other />
+            </TabItem>
+            <TabItem Header="{DynamicResource ui_AIV}">
+                <myControls:AIV />
+            </TabItem>
+            <TabItem Header="{DynamicResource ui_AIC}">
+                <myControls:AIC />
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
