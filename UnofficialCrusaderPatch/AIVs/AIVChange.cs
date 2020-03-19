@@ -21,12 +21,12 @@ namespace UCP.Patching
             this.resFolder = "UCP.AIVs." + titleIdent;
         }
 
-        public override void InitUI()
-        {
-            base.InitUI();
-            if (this.IsChecked)
-                activeChange = this;
-        }
+        //public override void InitUI()
+        //{
+        //    //base.InitUI();
+        //    //if (this.IsChecked)
+        //    //    activeChange = this;
+        //}
 
         public static AIVChange CreateDefault(string titleIdent, bool enabledDefault = false)
         {

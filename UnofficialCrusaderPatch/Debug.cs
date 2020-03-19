@@ -16,7 +16,8 @@ namespace UCP
 
         public static void Error(string message)
         {
-            Show(message, Localization.Get("ui_error"));
+            
+            Show(message, "Error");
         }
 
         public static void Error(Exception e)

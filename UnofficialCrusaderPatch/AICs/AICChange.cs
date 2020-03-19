@@ -42,57 +42,36 @@ namespace UCP.Patching
             this.NoLocalization = true;
             this.collection = coll;
             this.intern = isIntern;
-
-            string descrIdent = title + isIntern;
-
-            // set localized description, if it's empty seek a non-empty description
-            var header = collection.Header;
-            string descr = header.DescrByIndex(Localization.LanguageIndex);
-
-            if (string.IsNullOrWhiteSpace(descr))
-            {
-                foreach(int index in Localization.IndexLoadOrder)
-                {
-                    descr = header.DescrByIndex(index);
-                    if (!string.IsNullOrWhiteSpace(descr))
-                        break;
-                }
-            }
-
-            this.headerKey = descrIdent + "_descr";
-            Localization.Add(headerKey, descr);
-
-            this.Add(new DefaultHeader(descrIdent, true));
         }
 
         #region UI
 
         static Brush ColorBrush = new SolidColorBrush(Colors.Bisque);
         static Brush ButtonBrush = new SolidColorBrush(Color.FromArgb(10, 0, 0, 0));
-        public override void InitUI()
-        {
-            base.InitUI();
+        //public override void InitUI()
+        //{
+        //    base.InitUI();
 
-            if (!this.intern)
-                this.titleBox.Background = ColorBrush;
-            else
-            {
-                Button button = new Button()
-                {
-                    //Width = 40,
-                    Height = 20,
-                    Content = Localization.Get("ui_aicexport"),
-                    HorizontalAlignment = HorizontalAlignment.Right,
-                    VerticalAlignment = VerticalAlignment.Bottom,
-                    Margin = new Thickness(0, 0, 5, 5),
-                    ToolTip = Localization.Get("ui_aichint"),
-                    Background = ButtonBrush,
-                };
-                button.Click += (s, e) => this.ExportFile();
+        //    if (!this.intern)
+        //        this.titleBox.Background = ColorBrush;
+        //    else
+        //    {
+        //        Button button = new Button()
+        //        {
+        //            //Width = 40,
+        //            Height = 20,
+        //            Content = Localization.Get("ui_aicexport"),
+        //            HorizontalAlignment = HorizontalAlignment.Right,
+        //            VerticalAlignment = VerticalAlignment.Bottom,
+        //            Margin = new Thickness(0, 0, 5, 5),
+        //            ToolTip = Localization.Get("ui_aichint"),
+        //            Background = ButtonBrush,
+        //        };
+        //        button.Click += (s, e) => this.ExportFile();
 
-                this.grid.Children.Add(button);
-            }
-        }
+        //        this.grid.Children.Add(button);
+        //    }
+        //}
 
         void ExportFile()
         {
@@ -104,8 +83,8 @@ namespace UCP.Patching
             {
                 this.collection.Write(fs);
             }
-
-            Debug.Show(Localization.Get("ui_aicexport_success"), this.TitleIdent);
+            //todo
+            //Debug.Show(Localization.Get("ui_aicexport_success"), this.TitleIdent);
         }
 
         #endregion
@@ -121,7 +100,7 @@ namespace UCP.Patching
                 if (Version.Changes[i] is AICChange change && !change.intern)
                 {
                     Version.Changes.RemoveAt(i);
-                    Localization.Remove(change.headerKey);
+                    //Localization.Remove(change.headerKey);
                     View.Items.Remove(change.UIElement);
                     change.collection = null;
                 }
@@ -222,7 +201,7 @@ namespace UCP.Patching
                     {
                         if (add2UI)
                         {
-                            aicChange.InitUI();
+                           // aicChange.InitUI();
                             View.Items.Add(aicChange.UIElement);
                         }
                     }

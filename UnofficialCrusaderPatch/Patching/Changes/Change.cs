@@ -15,7 +15,6 @@ namespace UCP.Patching
 
         string titleIdent;
         public string TitleIdent => titleIdent;
-        public string GetTitle() { return NoLocalization ? titleIdent : Localization.Get(titleIdent); }
 
         ChangeType type;
         public ChangeType Type => type;
@@ -70,55 +69,55 @@ namespace UCP.Patching
         protected CheckBox titleBox;
         protected Grid grid;
 
-        public virtual void InitUI()
-        {
-            this.titleBox = new CheckBox()
-            {
-                Content = new TextBlock()
-                {
-                    Text = this.GetTitle(),
-                    TextWrapping = TextWrapping.Wrap,
-                    Margin = new Thickness(0, -1, 0, 0),
-                    FontSize = 14,
-                    Width = 400,
-                },
-                IsChecked = headerList.Exists(h => h.IsEnabled),
-            };
+        //public virtual void InitUI()
+        //{
+        //    this.titleBox = new CheckBox()
+        //    {
+        //        Content = new TextBlock()
+        //        {
+        //            Text = this.GetTitle(),
+        //            TextWrapping = TextWrapping.Wrap,
+        //            Margin = new Thickness(0, -1, 0, 0),
+        //            FontSize = 14,
+        //            Width = 400,
+        //        },
+        //        IsChecked = headerList.Exists(h => h.IsEnabled),
+        //    };
 
-            TreeViewItem tvi = new TreeViewItem()
-            {
-                IsExpanded = false,
-                Focusable = false,
-                Header = titleBox,
-                MinHeight = 22,
-            };
+        //    TreeViewItem tvi = new TreeViewItem()
+        //    {
+        //        IsExpanded = false,
+        //        Focusable = false,
+        //        Header = titleBox,
+        //        MinHeight = 22,
+        //    };
 
-            if (headerList.Exists(h => h is ColorHeader))
-            {
-                titleBox.IsEnabled = false;
-                tvi.MouseDown += (s, e) => tvi.IsExpanded = !tvi.IsExpanded;
-            }
-            else
-            {
-                titleBox.Checked += TitleBox_Checked;
-                titleBox.Unchecked += TitleBox_Unchecked;
-            }
+        //    if (headerList.Exists(h => h is ColorHeader))
+        //    {
+        //        titleBox.IsEnabled = false;
+        //        tvi.MouseDown += (s, e) => tvi.IsExpanded = !tvi.IsExpanded;
+        //    }
+        //    else
+        //    {
+        //        titleBox.Checked += TitleBox_Checked;
+        //        titleBox.Unchecked += TitleBox_Unchecked;
+        //    }
 
-            grid = new Grid()
-            {
-                Background = new SolidColorBrush(Color.FromArgb(150, 200, 200, 200)),
-                Width = 420,
-                Margin = new Thickness(-18, 5, 0, 0),
-                Focusable = false,
-            };
+        //    grid = new Grid()
+        //    {
+        //        Background = new SolidColorBrush(Color.FromArgb(150, 200, 200, 200)),
+        //        Width = 420,
+        //        Margin = new Thickness(-18, 5, 0, 0),
+        //        Focusable = false,
+        //    };
             
-            FillGrid(grid);
+        //    FillGrid(grid);
 
-            tvi.Items.Add(grid);
-            tvi.Items.Add(null); // spacing
+        //    tvi.Items.Add(grid);
+        //    tvi.Items.Add(null); // spacing
 
-            this.uiElement = tvi;
-        }
+        //    this.uiElement = tvi;
+        //}
 
         protected virtual void TitleBox_Unchecked(object sender, RoutedEventArgs e)
         {
@@ -139,53 +138,53 @@ namespace UCP.Patching
             Configuration.Save(this.titleIdent);
         }
 
-        void FillGrid(Grid grid)
-        {
-            bool singleDefault = headerList.Count == 1 && headerList[0].GetType() == typeof(DefaultHeader);
+        //void FillGrid(Grid grid)
+        //{
+        //    bool singleDefault = headerList.Count == 1 && headerList[0].GetType() == typeof(DefaultHeader);
 
-            double height = 5;
-            for (int i = 0; i < headerList.Count; i++)
-            {
-                var header = headerList[i];
+        //    double height = 5;
+        //    for (int i = 0; i < headerList.Count; i++)
+        //    {
+        //        var header = headerList[i];
 
-                if (!singleDefault)
-                {
-                    header.OnEnabledChange += Header_OnEnable;
+        //        if (!singleDefault)
+        //        {
+        //            header.OnEnabledChange += Header_OnEnable;
 
-                    // ui element
-                    var uiElement = header.InitUI(headerList.Count > 1);
-                    uiElement.HorizontalAlignment = HorizontalAlignment.Left;
-                    uiElement.VerticalAlignment = VerticalAlignment.Top;
-                    uiElement.Margin = new Thickness(6, height, 0, 0);
-                    height += uiElement.Height + 5;
+        //            // ui element
+        //            var uiElement = header.InitUI(headerList.Count > 1);
+        //            uiElement.HorizontalAlignment = HorizontalAlignment.Left;
+        //            uiElement.VerticalAlignment = VerticalAlignment.Top;
+        //            uiElement.Margin = new Thickness(6, height, 0, 0);
+        //            height += uiElement.Height + 5;
 
-                    grid.Children.Add(uiElement);
-                }
+        //            grid.Children.Add(uiElement);
+        //        }
                 
-                string headerDescr = header.NoLocalization ? header.DescrIdent : Localization.Get(header.DescrIdent + "_descr");
-                if (!string.IsNullOrWhiteSpace(headerDescr))
-                {
-                    // Description
-                    TextBlock description = new TextBlock()
-                    {
-                        HorizontalAlignment = HorizontalAlignment.Left,
-                        VerticalAlignment = VerticalAlignment.Top,
-                        Margin = new Thickness(6, height, 0, 0),
-                        TextWrapping = TextWrapping.Wrap,
-                        FontSize = 13,
-                        Width = grid.Width - 12,
-                    };
+        //        //string headerDescr = header.NoLocalization ? header.DescrIdent : Localization.Get(header.DescrIdent + "_descr");
+        //        //if (!string.IsNullOrWhiteSpace(headerDescr))
+        //        //{
+        //        //    // Description
+        //        //    TextBlock description = new TextBlock()
+        //        //    {
+        //        //        HorizontalAlignment = HorizontalAlignment.Left,
+        //        //        VerticalAlignment = VerticalAlignment.Top,
+        //        //        Margin = new Thickness(6, height, 0, 0),
+        //        //        TextWrapping = TextWrapping.Wrap,
+        //        //        FontSize = 13,
+        //        //        Width = grid.Width - 12,
+        //        //    };
                     
-                    TextReferencer.SetText(description, headerDescr);
-                    grid.Children.Add(description);
-                    height += description.MeasureHeight();
+        //        //    TextReferencer.SetText(description, headerDescr);
+        //        //    grid.Children.Add(description);
+        //        //    height += description.MeasureHeight();
 
-                    if (i != headerList.Count - 1)
-                        height += 22;
-                }
-            }
-            grid.Height = height + 10;
-        }
+        //        //    if (i != headerList.Count - 1)
+        //        //        height += 22;
+        //        //}
+        //    }
+        //    grid.Height = height + 10;
+        //}
         
         void Header_OnEnable(DefaultHeader header, bool enabled)
         {

@@ -23,7 +23,8 @@
     <system:String x:Key="ui_Other">Pozostałe</system:String>
     <system:String x:Key="ui_AIV">AIV</system:String>
     <system:String x:Key="ui_AIC">AIC</system:String>
-
+    <system:String x:Key="ui_Config">Config</system:String>
+    
     <!-- Bugfixes -->
     <system:String x:Key="u_fireballistafix">Fire ballistas shoot monks and tunnelers</system:String>
     <system:String x:Key="u_fireballistafix_descr">Fire ballistas automatically shoot at monks and tunnelers.</system:String>

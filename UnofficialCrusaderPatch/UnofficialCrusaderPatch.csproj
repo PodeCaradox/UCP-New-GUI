@@ -80,10 +80,6 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="Debug.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="Localization\LanguageWindow.xaml.cs">
-      <DependentUpon>LanguageWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Localization\Localization.cs" />
     <Compile Include="Localization\TextReferencer.cs" />
     <Compile Include="Patching\BinElements\BinCode.cs" />
     <Compile Include="Patching\BinElements\BinCollection.cs" />
@@ -1491,12 +1487,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Localization\German.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Localization\LanguageWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Localization\Polish.txt" />

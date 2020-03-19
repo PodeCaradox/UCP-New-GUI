@@ -38,53 +38,53 @@ namespace UCP.Patching
             buttons.ForEach(b => b.IsEnabled = enabled);
         }
 
-        protected override FrameworkElement CreateUI()
-        {
-            Grid grid = new Grid()
-            {
-                Width = 410,
-                Height = 30,
-            };
+        //protected override FrameworkElement CreateUI()
+        //{
+        //    Grid grid = new Grid()
+        //    {
+        //        Width = 410,
+        //        Height = 30,
+        //    };
 
-            focus = new Image()
-            {
-                Source = new BitmapImage(new Uri("pack://application:,,,/UnofficialCrusaderPatch;component/Graphics/shield.png")),
-                Margin = new Thickness(7, 4, 0, 0),
-                Width = 22,
-                Height = 22,
-            };
+        //    focus = new Image()
+        //    {
+        //        Source = new BitmapImage(new Uri("pack://application:,,,/UnofficialCrusaderPatch;component/Graphics/shield.png")),
+        //        Margin = new Thickness(7, 4, 0, 0),
+        //        Width = 22,
+        //        Height = 22,
+        //    };
 
-            Canvas canvas = new Canvas();
-            canvas.Children.Add(focus);
+        //    Canvas canvas = new Canvas();
+        //    canvas.Children.Add(focus);
 
-            grid.Children.Add(canvas);
+        //    grid.Children.Add(canvas);
 
-            for (int i = 0; i < 8; i++)
-            {
-                Border button = new Border()
-                {
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    VerticalAlignment = VerticalAlignment.Top,
-                    Margin = new Thickness(i * ButtonSpacing, 0, 0, 0),
-                    BorderThickness = new Thickness(1, 1, 1, 1),
-                    BorderBrush = Brushes.Black,
-                    Background = new SolidColorBrush(Colors[i]),
-                    Height = 30,
-                    Width = 38,
-                };
+        //    for (int i = 0; i < 8; i++)
+        //    {
+        //        Border button = new Border()
+        //        {
+        //            HorizontalAlignment = HorizontalAlignment.Left,
+        //            VerticalAlignment = VerticalAlignment.Top,
+        //            Margin = new Thickness(i * ButtonSpacing, 0, 0, 0),
+        //            BorderThickness = new Thickness(1, 1, 1, 1),
+        //            BorderBrush = Brushes.Black,
+        //            Background = new SolidColorBrush(Colors[i]),
+        //            Height = 30,
+        //            Width = 38,
+        //        };
 
-                int value = i + 1;
-                button.MouseUp += (s, e) => SetValue(value);
+        //        int value = i + 1;
+        //        button.MouseUp += (s, e) => SetValue(value);
 
-                grid.Children.Insert(0, button);
-                buttons.Add(button);
-            }
+        //        grid.Children.Insert(0, button);
+        //        buttons.Add(button);
+        //    }
 
-            this.OnValueChange += ValueChange;
-            ValueChange();
+        //    this.OnValueChange += ValueChange;
+        //    ValueChange();
 
-            return grid;
-        }
+        //    return grid;
+        //}
 
         void ValueChange()
         {

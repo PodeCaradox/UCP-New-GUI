@@ -15,6 +15,8 @@ using System.Windows.Media.Imaging;
 using UCP.Views;
 using UCP.Data;
 using UCP.Helper;
+using System.Windows.Media;
+using UCP.Structs;
 
 namespace UCP
 {
@@ -29,10 +31,11 @@ namespace UCP
         {
             Debug.Error(e.Exception);
         }
-
+        MainViewModel _vm;
         public MainWindow()
         {
             MainViewModel vm = new MainViewModel();
+            _vm = vm;
             this.DataContext = vm;
 
             Configuration.LoadGeneral();
@@ -51,7 +54,6 @@ namespace UCP
             pathSelection.ShowDialog();
             #endregion
 
-
             ////Todo Save Language Config
             //if (Configuration.Language != Localization.LanguageIndex)
             //{
@@ -63,9 +65,11 @@ namespace UCP
             //InitializeComponent();
             this.Title = string.Format("{0} {1}",Utility.GetText("Name"), Version.PatcherVersion);
 
+            InitializeComponent();
+            _vm.LoadConfigData();
 
 
-       
+
             //TextReferencer.SetText(linkLabel, Localization.Get("ui_welcometext"));
 
             //var asm = System.Reflection.Assembly.GetExecutingAssembly();
@@ -74,11 +78,14 @@ namespace UCP
             //    linkLabel.Inlines.Add("\n\n\n\n\n\n" + sr.ReadToEnd());
         }
 
+      
 
+
+       
 
         private void NewPath(object sender, CustomEventArgs e)
         {
-           
+            _vm.StrongholdPath = e.Text;
         }
 
 

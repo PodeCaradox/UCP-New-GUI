@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UCP.Data;
 
 namespace UCP.Views.TabViews
 {
@@ -23,6 +24,13 @@ namespace UCP.Views.TabViews
         public AIV()
         {
             InitializeComponent();
+            this.DataContextChanged += DataContextChangedEvent;
+        }
+
+        private void DataContextChangedEvent(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            var vm = e.NewValue as MainViewModel;
+            vm.AddXamlObjects(MainStackPanel);
         }
     }
 }

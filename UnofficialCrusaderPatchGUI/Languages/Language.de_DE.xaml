@@ -23,6 +23,7 @@
     <system:String x:Key="ui_Other">Sonstiges</system:String>
     <system:String x:Key="ui_AIV">AIV</system:String>
     <system:String x:Key="ui_AIC">AIC</system:String>
+    <system:String x:Key="ui_Config">Config</system:String>
     
     <!-- Bugfixes -->
     <system:String x:Key="u_fireballistafix">Feuerballisten schießen auf Mönche und Tunnelgräber</system:String>

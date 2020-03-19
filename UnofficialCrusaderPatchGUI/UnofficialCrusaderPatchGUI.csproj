@@ -76,10 +76,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converter\StringToResource.cs" />
     <Compile Include="Data\MainViewModel.cs" />
     <Compile Include="Data\ViewModelBase.cs" />
     <Compile Include="Data\Utility.cs" />
     <Compile Include="Helper\CustomEventArgs.cs" />
+    <Compile Include="Structs\ConfigFile.cs" />
+    <Compile Include="Structs\SavedConfig.cs" />
     <Compile Include="Views\LanguageSelection.xaml.cs">
       <DependentUpon>LanguageSelection.xaml</DependentUpon>
     </Compile>
@@ -224,5 +227,6 @@
   <ItemGroup>
     <Resource Include="Graphics\shield.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -22,7 +22,7 @@ namespace UCP.Patching
 
         string descrIdent;
         public string DescrIdent => descrIdent;
-        public string GetDescription() { return NoLocalization ? descrIdent : Localization.Get(descrIdent); }
+        //public string GetDescription() { return NoLocalization ? descrIdent : Localization.Get(descrIdent); }
 
         bool defaultIsEnabled;
         public bool DefaultIsEnabled => defaultIsEnabled;
@@ -47,27 +47,27 @@ namespace UCP.Patching
         CheckBox box;
         public CheckBox CheckBox => box;
 
-        public FrameworkElement InitUI(bool createCheckBox)
-        {
-            FrameworkElement content = CreateUI();
-            if (createCheckBox)
-            {
-                box = new CheckBox()
-                {
-                    IsChecked = isEnabled,
-                    Content = content,
-                    Height = content.Height,
-                    HorizontalAlignment = HorizontalAlignment.Left,
-                    VerticalAlignment = VerticalAlignment.Top,
-                };
+        //public FrameworkElement InitUI(bool createCheckBox)
+        //{
+        //    FrameworkElement content = CreateUI();
+        //    if (createCheckBox)
+        //    {
+        //        box = new CheckBox()
+        //        {
+        //            IsChecked = isEnabled,
+        //            Content = content,
+        //            Height = content.Height,
+        //            HorizontalAlignment = HorizontalAlignment.Left,
+        //            VerticalAlignment = VerticalAlignment.Top,
+        //        };
 
-                box.Checked += Box_Checked;
-                box.Unchecked += Box_Unchecked;
+        //        box.Checked += Box_Checked;
+        //        box.Unchecked += Box_Unchecked;
 
-                return box;
-            }
-            return content;
-        }
+        //        return box;
+        //    }
+        //    return content;
+        //}
 
         void Box_Unchecked(object sender, RoutedEventArgs e)
         {
@@ -85,14 +85,14 @@ namespace UCP.Patching
             }
         }
 
-        protected virtual FrameworkElement CreateUI()
-        {
-            return new TextBlock()
-            {
-                Text = this.GetDescription(),
-                Height = 16,
-            };
-        }
+        //protected virtual FrameworkElement CreateUI()
+        //{
+        //    return new TextBlock()
+        //    {
+        //        Text = this.GetDescription(),
+        //        Height = 16,
+        //    };
+        //}
 
         bool isEnabled;
         public virtual bool IsEnabled

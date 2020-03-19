@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:UCP"
         mc:Ignorable="d"
         xmlns:myControls="clr-namespace:UCP.Views.TabViews"
-        Title="{DynamicResource Name}" Height="400" Width="500">
+        Height="400" Width="500">
     <Window.Background>
         <ImageBrush ImageSource="../Graphics/background.jpg"
         Viewport="0,0,200,200"
@@ -14,21 +14,34 @@
         TileMode="Tile"
         Stretch="None"/>
     </Window.Background>
-    <Grid>
+    <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
-        <Image Grid.Row="0" Source="../Graphics/frame.jpg" Stretch="Fill" HorizontalAlignment="Center" />
-        <Image Grid.Row="2" Source="../Graphics/frame.jpg" Stretch="Fill" HorizontalAlignment="Center" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Image Grid.Row="0"  Source="../Graphics/frame.jpg" Stretch="Fill" HorizontalAlignment="Center" />
+        <Image Grid.Row="2"  Source="../Graphics/frame.jpg" Stretch="Fill" HorizontalAlignment="Center" >
             <Image.LayoutTransform>
                 <TransformGroup>
                     <RotateTransform Angle="180"/>
                 </TransformGroup>
             </Image.LayoutTransform>
         </Image>
-        <TabControl Grid.Row="1" Background="#CCFFFFFF">
+        <Menu Width="Auto" Height="Auto" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <MenuItem Header="File" Height="20">
+                <MenuItem Header="Load"/>
+                <MenuItem Header="Save"/>
+            </MenuItem>
+            <MenuItem Header="Options" Height="20">
+                <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" ItemsSource="{Binding LanguagesComboBox}" Text="{Binding ActualLanguage}" />
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding StrongholdPath}"/>
+            </MenuItem>
+        </Menu>
+        <TabControl x:Name="MainTabControl" Grid.Row="1" Background="#CCFFFFFF" HorizontalAlignment="Stretch">
             <TabItem Header="{DynamicResource ui_Bugfix}">
                 <myControls:Bugfixes />
             </TabItem>
@@ -47,6 +60,8 @@
             <TabItem Header="{DynamicResource ui_AIC}">
                 <myControls:AIC />
             </TabItem>
+           
         </TabControl>
+      
     </Grid>
 </Window>

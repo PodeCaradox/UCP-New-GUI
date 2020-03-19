@@ -28,47 +28,47 @@ namespace UCP.Patching
             slider.IsEnabled = enabled;
         }
 
-        protected override FrameworkElement CreateUI()
-        {
-            const int sliderWidth = 260;
-            const int sliderHeight = 18;
+        //protected override FrameworkElement CreateUI()
+        //{
+        //    const int sliderWidth = 260;
+        //    const int sliderHeight = 18;
 
-            Grid grid = new Grid
-            {
-                Width = 300,
-                Height = sliderHeight,
-            };
+        //    Grid grid = new Grid
+        //    {
+        //        Width = 300,
+        //        Height = sliderHeight,
+        //    };
 
-            slider = new Slider()
-            {
-                HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Top,
-                Margin = new Thickness(0, 0, 0, 0),
-                Width = sliderWidth,
-                Height = sliderHeight,
+        //    slider = new Slider()
+        //    {
+        //        HorizontalAlignment = HorizontalAlignment.Left,
+        //        VerticalAlignment = VerticalAlignment.Top,
+        //        Margin = new Thickness(0, 0, 0, 0),
+        //        Width = sliderWidth,
+        //        Height = sliderHeight,
 
-                Value = this.Value,
-                IsSnapToTickEnabled = true,
-                TickFrequency = delta,
-                Minimum = min,
-                Maximum = max,
-            };
-            slider.ValueChanged += Slider_ValueChanged;
-            this.OnValueChange += SliderHeader_OnValueChange;
-            grid.Children.Add(slider);
+        //        Value = this.Value,
+        //        IsSnapToTickEnabled = true,
+        //        TickFrequency = delta,
+        //        Minimum = min,
+        //        Maximum = max,
+        //    };
+        //    slider.ValueChanged += Slider_ValueChanged;
+        //    this.OnValueChange += SliderHeader_OnValueChange;
+        //    grid.Children.Add(slider);
 
-            sliderText = new TextBlock()
-            {
-                HorizontalAlignment = HorizontalAlignment.Left,
-                VerticalAlignment = VerticalAlignment.Center,
-                Margin = new Thickness(sliderWidth + 5, 0, 0, 0),
-                Text = this.Value.ToString(),
-                Height = sliderHeight,
-            };
-            grid.Children.Add(sliderText);
+        //    sliderText = new TextBlock()
+        //    {
+        //        HorizontalAlignment = HorizontalAlignment.Left,
+        //        VerticalAlignment = VerticalAlignment.Center,
+        //        Margin = new Thickness(sliderWidth + 5, 0, 0, 0),
+        //        Text = this.Value.ToString(),
+        //        Height = sliderHeight,
+        //    };
+        //    grid.Children.Add(sliderText);
 
-            return grid;
-        }
+        //    return grid;
+        //}
 
         void SliderHeader_OnValueChange()
         {

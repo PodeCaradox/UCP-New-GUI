@@ -7,10 +7,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <ScrollViewer>
-        <StackPanel>
+        <StackPanel x:Name="MainStackPanel">
+            <!--Background="#CCFFFFFF"-->
             <TreeViewItem IsExpanded="false" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                 <TreeViewItem.Header>
-                    <CheckBox Content="{DynamicResource u_fireballistafix}"/>
+                    <CheckBox Content="{DynamicResource u_fireballistafix}" x:Name="Dummy4"/>
                 </TreeViewItem.Header>
                 <TextBlock Text="{DynamicResource u_fireballistafix_descr}"/>
             </TreeViewItem>
