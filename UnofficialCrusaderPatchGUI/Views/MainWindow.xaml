@@ -33,8 +33,8 @@
         </Image>
         <Menu Width="Auto" Height="Auto" HorizontalAlignment="Left" VerticalAlignment="Top">
             <MenuItem Header="File" Height="20">
-                <MenuItem Header="Load"/>
-                <MenuItem Header="Save"/>
+                <MenuItem Header="Load Config" Click="LoadConfig_Click"/>
+                <MenuItem Header="Save Config" Click="SaveConfig_Click"/>
             </MenuItem>
             <MenuItem Header="Options" Height="20">
                 <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" ItemsSource="{Binding LanguagesComboBox}" Text="{Binding ActualLanguage}" />

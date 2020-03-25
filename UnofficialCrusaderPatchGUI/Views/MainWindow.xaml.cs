@@ -17,6 +17,8 @@ using UCP.Data;
 using UCP.Helper;
 using System.Windows.Media;
 using UCP.Structs;
+using System.Windows.Forms;
+using Application = System.Windows.Application;
 
 namespace UCP
 {
@@ -41,18 +43,18 @@ namespace UCP
             Configuration.LoadGeneral();
             Configuration.LoadChanges();
 
-            #region Select Language
-            LanguageSelection languageSelection = new LanguageSelection();
-            languageSelection.DataContext = vm;
-            languageSelection.ShowDialog();
-            #endregion
+            //#region Select Language
+            //LanguageSelection languageSelection = new LanguageSelection();
+            //languageSelection.DataContext = vm;
+            //languageSelection.ShowDialog();
+            //#endregion
 
-            #region SelectPath
-            String path = Utility.CheckCrusaderPath();
-            PathSelection pathSelection = new PathSelection(path);
-            pathSelection.GetValueOnClose += NewPath;
-            pathSelection.ShowDialog();
-            #endregion
+            //#region SelectPath
+            //String path = Utility.CheckCrusaderPath();
+            //PathSelection pathSelection = new PathSelection(path);
+            //pathSelection.GetValueOnClose += NewPath;
+            //pathSelection.ShowDialog();
+            //#endregion
 
             ////Todo Save Language Config
             //if (Configuration.Language != Localization.LanguageIndex)
@@ -66,7 +68,7 @@ namespace UCP
             this.Title = string.Format("{0} {1}",Utility.GetText("Name"), Version.PatcherVersion);
 
             InitializeComponent();
-            _vm.LoadConfigData();
+            
 
 
 
@@ -87,7 +89,51 @@ namespace UCP
         {
             _vm.StrongholdPath = e.Text;
         }
+        
+        private void SaveConfig_Click(object sender, RoutedEventArgs e)
+        {
+            var saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            saveFileDialog.Title = "Save Config";
+            saveFileDialog.Filter = "cfg files (*.cfg)|*.cfg";
+            saveFileDialog.InitialDirectory = Directory.GetCurrentDirectory();
+            DialogResult dr = saveFileDialog.ShowDialog();
+            if (dr == System.Windows.Forms.DialogResult.OK)
+            {
+                try
+                {
+                    _vm.SaveConfig(saveFileDialog.FileName);
+                }
+                catch (Exception em)
+                {
 
+                    Debug.Error(em.Message);
+                }
+
+            }
+        }
+        private void LoadConfig_Click(object sender, RoutedEventArgs e)
+        {
+            var openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            openFileDialog.InitialDirectory = Directory.GetCurrentDirectory();
+            //todo
+            openFileDialog.Title = "Load Config";
+            openFileDialog.Filter = "cfg files (*.cfg)|*.cfg";
+            openFileDialog.Multiselect = false;
+            DialogResult dr = openFileDialog.ShowDialog();
+            if (dr == System.Windows.Forms.DialogResult.OK)
+            {
+                try
+                {
+                    _vm.LoadConfig(openFileDialog.FileName);
+                }
+                catch (Exception em)
+                {
+
+                    Debug.Error(em.Message);
+                }
+                
+            }
+        }
 
 
 
@@ -191,7 +237,7 @@ namespace UCP
         //{
         //    try
         //    {
-        //        Patcher.Install((string)arg, SetPercent);
+        //Patcher.Install((string)arg, SetPercent);
 
         //        Dispatcher.Invoke(DispatcherPriority.Render, new Action(() =>
         //        {

@@ -16,17 +16,7 @@ namespace UCP.Patching
         {
         }
 
-        static readonly List<Color> Colors = new List<Color>()
-        {
-            Color.FromArgb(255, 240, 32, 0), // red
-            Color.FromArgb(255, 248, 120, 0), // orange
-            Color.FromArgb(255, 224, 224, 0), // yellow
-            Color.FromArgb(255, 0, 0, 248), // blue
-            Color.FromArgb(255, 80, 80, 80), // black
-            Color.FromArgb(255, 184, 0, 248), // purple
-            Color.FromArgb(255, 0, 208, 240), // light blue
-            Color.FromArgb(255, 0, 216, 0) // green
-        };
+       
 
         Image focus;
         const int ButtonSpacing = 53;

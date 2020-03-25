@@ -30,7 +30,7 @@ namespace UCP.Views.TabViews
         private void DataContextChangedEvent(object sender, DependencyPropertyChangedEventArgs e)
         {
             var vm = e.NewValue as MainViewModel;
-            vm.AddXamlObjects(MainStackPanel);
+            vm.AddXamlObjects(AIVStackpanel);
         }
     }
 }

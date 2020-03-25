@@ -6,15 +6,34 @@
              xmlns:local="clr-namespace:UCP.Views.TabViews"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
     <ScrollViewer>
-        <StackPanel x:Name="MainStackPanel">
+        <StackPanel x:Name="TroopsStackpanel">
             <!--Background="#CCFFFFFF"-->
-            <TreeViewItem IsExpanded="false" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <TreeViewItem.Header>
-                    <CheckBox x:Name="Dummy5"/>
-                </TreeViewItem.Header>
-                <TextBlock Text="{DynamicResource Deutsch}"/>
-            </TreeViewItem>
+            <Expander IsExpanded="false">
+                <Expander.Header>
+                    <CheckBox Content="{DynamicResource u_laddermen}" x:Name="u_laddermen"/>
+                </Expander.Header>
+                <TextBlock Text="{DynamicResource u_laddermen_descr}" TextWrapping="WrapWithOverflow"/>
+            </Expander>
+            <Expander IsExpanded="false">
+                <Expander.Header>
+                    <CheckBox Content="{DynamicResource u_ArabXBow}" x:Name="u_ArabXBow"/>
+                </Expander.Header>
+                <TextBlock Text="{DynamicResource u_arabxbow_descr}" TextWrapping="WrapWithOverflow" />
+            </Expander>
+            <Expander IsExpanded="false">
+                <Expander.Header>
+                    <CheckBox Content="{DynamicResource u_ArabWall}" x:Name="u_ArabWall"/>
+                </Expander.Header>
+                <TextBlock Text="{DynamicResource u_ArabWall_descr}" TextWrapping="WrapWithOverflow" />
+            </Expander>
+            <Expander IsExpanded="false">
+                <Expander.Header>
+                    <CheckBox Content="{DynamicResource u_spearmen}" x:Name="u_spearmen"/>
+                </Expander.Header>
+                <TextBlock Text="{DynamicResource u_spearmen_descr}" TextWrapping="WrapWithOverflow" />
+            </Expander>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

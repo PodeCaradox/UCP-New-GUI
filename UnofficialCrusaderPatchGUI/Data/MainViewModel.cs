@@ -1,17 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using UCP.Patching;
 using UCP.Structs;
 using static UCP.Utility;
-
 namespace UCP.Data
 {
     public partial class MainViewModel : ViewModelBase
@@ -26,7 +21,7 @@ namespace UCP.Data
 
         }
 
-        private Dictionary<string, object> _xamlObjects = new Dictionary<string, object>();
+        
 
         private Languages actualLanguage = Languages.English;
         public Languages ActualLanguage
@@ -46,48 +41,76 @@ namespace UCP.Data
             }
         }
 
+        private Dictionary<string, object> _xamlObjects = new Dictionary<string, object>();
         internal void AddXamlObjects(StackPanel mainStackPanel)
         {
-            foreach (var item in mainStackPanel.Children)
+            try
             {
-                if (item is TreeViewItem)
+                foreach (var item in mainStackPanel.Children)
                 {
-                    var treeViewItem = item as TreeViewItem;
-                    var frameworkElement = treeViewItem.Header as FrameworkElement;
-                    if(frameworkElement != null &&!String.IsNullOrEmpty( frameworkElement.Name))
+                    if (item is Expander)
                     {
-                        _xamlObjects.Add((treeViewItem.Header as FrameworkElement).Name, treeViewItem.Header);
-                        if (treeViewItem.Items.Count > 1)
+                        var expander = item as Expander;
+                        var frameworkElement = expander.Header as FrameworkElement;
+                        if (frameworkElement != null && !String.IsNullOrEmpty(frameworkElement.Name))
                         {
-                            foreach (var treeViewChild in treeViewItem.Items)
+                            _xamlObjects.Add(frameworkElement.Name, expander.Header);
+                            if (expander.Content.GetType() != typeof(TextBlock))
                             {
-                                if (treeViewChild.GetType() == typeof(Slider))
-                                {
-                                    Slider slider = treeViewChild as Slider;
-                                    _xamlObjects.Add(slider.Name, slider);
-                                    break;
-                                }
-                                //ColorBrush todo
-                                //else if (treeViewChild.GetType() == typeof(Slider))
-                                //{
-
-                                //}
+                                var panel = expander.Content as Panel;
+                                LoadXamlObjectsFromStackPanel(panel);
                             }
                         }
+                        else
+                        {
+                            Debug.Error("Framework element not found, check if names are Set in TabView " + mainStackPanel.Name);
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+
+                Debug.Error("Cant add Xaml Object to Dictionary, check if there is a x:name set double in the xaml TabViews" + mainStackPanel.Name+ "\n" + e.Message);
+            }
+           
+        }
+
+        private void LoadXamlObjectsFromStackPanel(Panel stackPanel)
+        {
+            if (stackPanel == null) return;
+            foreach (var treeViewChild in stackPanel.Children)
+            {
+                if (treeViewChild.GetType() != typeof(TextBlock) && treeViewChild.GetType() != typeof(Grid))
+                {
+                    if (treeViewChild.GetType() == typeof(StackPanel))
+                    {
+                        LoadXamlObjectsFromStackPanel(treeViewChild as StackPanel);
                     }
                     else
                     {
-                        Debug.Error("Framework element not found, check if names are Set");
+                        var frameworkElementChild = treeViewChild as FrameworkElement;
+                        if (String.IsNullOrEmpty(frameworkElementChild.Name))
+                        {
+                            Debug.Error("Framework element not found, check if names are Set in TabView " + stackPanel.Name);
+                            continue;
+                        }else if (frameworkElementChild.Name.StartsWith("Ignore"))
+                        {
+                            continue;
+                        }
+                        _xamlObjects.Add(frameworkElementChild.Name, frameworkElementChild);
                     }
+                    
                 }
             }
         }
 
         private readonly Languages[] languages;
 
-        internal void LoadConfigData()
+        public void LoadConfig(String path)
         {
-            var config = SaveConfig();
+            var fileText = File.ReadAllText(path);
+            var config = JsonConvert.DeserializeObject<ConfigFile>(fileText);
             for (int i = 0; i < config.Configs.Length; i++)
             {
                 object xamlObject;
@@ -103,9 +126,14 @@ namespace UCP.Data
                         var slider = xamlObject as Slider;
                         slider.Value = (double)config.Configs[i].ObjectValue;
                     }//todo ColorBlock
-                    else if (config.Configs[i].ObjectType == typeof(TextBlock))
+                    else if (config.Configs[i].ObjectType == typeof(Image))
                     {
-
+                        var image = xamlObject as Image;
+                        image.Tag = config.Configs[i].ObjectValue;
+                    }
+                    else
+                    {
+                        Debug.Error("Error while loading Object: " + config.Configs[i].ObjectType);
                     }
 
                 }
@@ -114,15 +142,43 @@ namespace UCP.Data
         }
 
         #region Debug
-        private ConfigFile SaveConfig()
+        public void SaveConfig(String path)
         {
-            ConfigFile config = new ConfigFile();
-            config.Language = ActualLanguage;
-            config.StrongholdPath = StrongholdPath;
-            config.Configs = new SavedConfig[2];
-            config.Configs[0] = new SavedConfig() { XamlObjectName = "Dummy", ObjectValue = true, ObjectType = typeof(CheckBox) };
-            config.Configs[1] = new SavedConfig() { XamlObjectName = "DummySlider", ObjectValue = 50d, ObjectType = typeof(Slider) };
-            return config;
+            var newConfig = new ConfigFile();
+            newConfig.Language = ActualLanguage;
+            newConfig.StrongholdPath = StrongholdPath;
+            newConfig.Configs = new SavedConfig[_xamlObjects.Count];
+
+            int c = 0;
+            foreach (var item in _xamlObjects)
+            {
+                newConfig.Configs[c].XamlObjectName = item.Key;
+                newConfig.Configs[c].ObjectType = item.Value.GetType();
+                if (newConfig.Configs[c].ObjectType == typeof(CheckBox))
+                {
+                    var checkbox = item.Value as CheckBox;
+                    if (checkbox.IsChecked.HasValue) newConfig.Configs[c].ObjectValue = checkbox.IsChecked.Value;
+                    else newConfig.Configs[c].ObjectValue = false;
+                }
+                else if (newConfig.Configs[c].ObjectType == typeof(Slider))
+                {
+                    var slider = item.Value as Slider;
+                    newConfig.Configs[c].ObjectValue = slider.Value;
+                }//todo ColorBlock
+                else if (newConfig.Configs[c].ObjectType == typeof(Image))
+                {
+                    var image = item.Value as Image;
+                    newConfig.Configs[c].ObjectValue = image.Tag;
+                }
+                else
+                {
+                    Debug.Error("Error while Saving Object: " + newConfig.Configs[c].XamlObjectName);
+                }
+                c++;
+            }
+
+            var data = JsonConvert.SerializeObject(newConfig, Formatting.Indented);
+            File.WriteAllText(path, data);
         }
         #endregion
 

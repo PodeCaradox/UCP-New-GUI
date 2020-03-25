@@ -8,13 +8,55 @@
              d:DesignHeight="450" d:DesignWidth="800"
              >
     <ScrollViewer>
-        <StackPanel x:Name="MainStackPanel"><!--Background="#CCFFFFFF"-->
-            <TreeViewItem IsExpanded="false" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                <TreeViewItem.Header>
-                    <CheckBox Content="{DynamicResource u_fireballistafix}" x:Name="Dummy3"/>
-                </TreeViewItem.Header>
-                <TextBlock Text="{DynamicResource Deutsch}"/>
-            </TreeViewItem>
+        <StackPanel x:Name="BugfixesStackpanel"><!--Background="#CCFFFFFF"-->
+            <Expander IsExpanded="false">
+                <Expander.Header>
+                    <CheckBox Content="{DynamicResource u_fireballistafix}" x:Name="u_fireballistafix"/>
+                </Expander.Header>
+                <TextBlock Text="{DynamicResource u_fireballistafix_descr}"/>
+            </Expander>
+            <Expander IsExpanded="false" >
+                <Expander.Header>
+                    <CheckBox Content="{DynamicResource ai_access}" x:Name="ai_access"/>
+                </Expander.Header>
+                <TextBlock Text="{DynamicResource ai_access_descr}" TextWrapping="WrapWithOverflow" />
+            </Expander>
+            <Expander IsExpanded="false" >
+                <Expander.Header>
+                    <CheckBox Content="{DynamicResource ai_defense}" x:Name="ai_defense"/>
+                </Expander.Header>
+                <TextBlock Text="{DynamicResource ai_defense_descr}" TextWrapping="WrapWithOverflow" />
+            </Expander>
+            <Expander IsExpanded="false" >
+                <Expander.Header>
+                    <CheckBox Content="{DynamicResource ai_tethers}" x:Name="ai_tethers"/>
+                </Expander.Header>
+                <TextBlock Text="{DynamicResource ai_tethers_descr}" TextWrapping="WrapWithOverflow" />
+            </Expander>
+            <Expander IsExpanded="false" >
+                <Expander.Header>
+                    <CheckBox Content="{DynamicResource ai_buywood}" x:Name="ai_buywood"/>
+                </Expander.Header>
+                <TextBlock Text="{DynamicResource ai_buywood_descr}" TextWrapping="WrapWithOverflow" />
+            </Expander>
+            <Expander IsExpanded="false" >
+                <Expander.Header>
+                    <CheckBox Content="{DynamicResource ai_towerengines}" x:Name="ai_towerengines"/>
+                </Expander.Header>
+                <TextBlock Text="{DynamicResource ai_towerengines_descr}" TextWrapping="WrapWithOverflow" />
+            </Expander>
+            <Expander IsExpanded="false" >
+                <Expander.Header>
+                    <CheckBox Content="{DynamicResource ai_assaultswitch}" x:Name="ai_assaultswitch"/>
+                </Expander.Header>
+                <TextBlock Text="{DynamicResource ai_assaultswitch_descr}" TextWrapping="WrapWithOverflow" />
+            </Expander>
+            <Expander IsExpanded="false" >
+                <Expander.Header>
+                    <CheckBox Content="{DynamicResource ai_rebuild}" x:Name="ai_rebuild"/>
+                </Expander.Header>
+                <TextBlock Text="{DynamicResource ai_rebuild_descr}" TextWrapping="WrapWithOverflow" />
+            </Expander>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,12 +26,45 @@ namespace UCP.Views.TabViews
         {
             InitializeComponent();
             this.DataContextChanged += DataContextChangedEvent;
+            desc.AddValueChanged(player1_color, someEventHandler);
         }
+
+        private void someEventHandler(object sender, EventArgs e)
+        {
+            var image = sender as Image;
+            if (image == null) return;
+
+            image.SetValue(Grid.ColumnProperty, int.Parse(image.Tag.ToString()));
+        }
+
+        DependencyPropertyDescriptor desc = DependencyPropertyDescriptor.FromProperty(FrameworkElement.TagProperty, typeof(FrameworkElement));
+        
 
         private void DataContextChangedEvent(object sender, DependencyPropertyChangedEventArgs e)
         {
             var vm = e.NewValue as MainViewModel;
-            vm.AddXamlObjects(MainStackPanel);
+            vm.AddXamlObjects(OtherStackpanel);
+        }
+
+        private void o_firecooldown_slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (o_firecooldown_textbox != null) o_firecooldown_textbox.Text = e.NewValue.ToString();
+        }
+
+        private void Ignore_Click(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            if (button == null) return;
+            player1_color.Tag = button.Tag;
+            
+            if (int.Parse(button.Tag.ToString()) > 0)
+            {
+                o_playercolor.IsChecked = true;
+            }
+            else
+            {
+                o_playercolor.IsChecked = false;
+            }
         }
     }
 }
