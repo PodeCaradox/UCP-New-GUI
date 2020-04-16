@@ -9,7 +9,7 @@
     <ScrollViewer>
         <StackPanel x:Name="AICStackpanel" >
             <!--Background="#CCFFFFFF"-->
-           
+            <ComboBox ItemsSource="{Binding Dummy}"></ComboBox>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

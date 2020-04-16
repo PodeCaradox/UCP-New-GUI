@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace UCP.Structs
 {
-    public struct SavedConfig
+    public struct AIDescription
     {
-        public String XamlObjectName;
-        public object ObjectValue;
+        public Dictionary<String,String> Languages;
     }
 }

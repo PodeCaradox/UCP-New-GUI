@@ -17,7 +17,7 @@
                     <StackPanel Orientation="Horizontal">
                         <Slider x:Name="o_firecooldown_slider" Maximum="20000" Minimum="0" HorizontalAlignment="Left" VerticalAlignment="Stretch" MinWidth="400"     
                         IsSnapToTickEnabled="True" Value="2000"
-                        TickFrequency="1" ValueChanged="o_firecooldown_slider_ValueChanged"/>
+                        TickFrequency="500" ValueChanged="o_firecooldown_slider_ValueChanged"/>
                         <TextBlock x:Name="o_firecooldown_textbox" HorizontalAlignment="Left" Text="200"/>
                     </StackPanel>
 

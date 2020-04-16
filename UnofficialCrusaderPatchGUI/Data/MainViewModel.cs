@@ -14,6 +14,16 @@ namespace UCP.Data
         public MainViewModel()
         {
             languages = Enum.GetValues(typeof(Languages)).Cast<Languages>().ToArray();
+
+            AIDescription aiDescription = new AIDescription();
+            aiDescription.Languages = new Dictionary<string, string>();
+            aiDescription.Languages.Add("Ger", "German Text");
+            aiDescription.Languages.Add("Eng", "English Text");
+            aiDescription.Languages.Add("Pol", "Polish Text");
+            aiDescription.Languages.Add("Rus", "Russian Text");
+            var data = JsonConvert.SerializeObject(aiDescription, Formatting.Indented);
+            File.WriteAllText(Directory.GetCurrentDirectory()+"\\Dummy.txt", data);
+
         }
 
         public void LoadUCPData()
@@ -22,6 +32,19 @@ namespace UCP.Data
         }
 
         
+
+            private String[] dummy = {"Custom","Min","Normal","Max" };
+        public String[] Dummy
+        {
+
+            get => dummy;
+            set
+            {
+                dummy = value;
+                this.RaisePropertyChanged("Dummy");
+              
+            }
+        }
 
         private Languages actualLanguage = Languages.English;
         public Languages ActualLanguage
@@ -107,38 +130,59 @@ namespace UCP.Data
 
         private readonly Languages[] languages;
 
+
+        /// <summary>
+        /// This Loads the UCP Config File and apply it to the GUI Elements
+        /// </summary>
+        /// <param name="path">The path to the UCP Config File</param>
         public void LoadConfig(String path)
         {
-            var fileText = File.ReadAllText(path);
-            var config = JsonConvert.DeserializeObject<ConfigFile>(fileText);
-            for (int i = 0; i < config.Configs.Length; i++)
+            try
             {
-                object xamlObject;
-                if (_xamlObjects.TryGetValue(config.Configs[i].XamlObjectName, out xamlObject)) 
+                var fileText = File.ReadAllText(path);
+                var config = JsonConvert.DeserializeObject<ConfigFile>(fileText);
+                for (int i = 0; i < config.Configs.Length; i++)
                 {
-                    if (config.Configs[i].ObjectType == typeof(CheckBox))
+                    object xamlObject;
+                    if (_xamlObjects.TryGetValue(config.Configs[i].XamlObjectName, out xamlObject))
                     {
-                        var checkbox = xamlObject as CheckBox;
-                        checkbox.IsChecked = (bool)config.Configs[i].ObjectValue;
-                    }
-                    else if (config.Configs[i].ObjectType == typeof(Slider))
-                    {
-                        var slider = xamlObject as Slider;
-                        slider.Value = (double)config.Configs[i].ObjectValue;
-                    }//todo ColorBlock
-                    else if (config.Configs[i].ObjectType == typeof(Image))
-                    {
-                        var image = xamlObject as Image;
-                        image.Tag = config.Configs[i].ObjectValue;
+                        var dataType = xamlObject.GetType();
+                        if (dataType == typeof(CheckBox))
+                        {
+                            var checkbox = xamlObject as CheckBox;
+                            checkbox.IsChecked = (bool)config.Configs[i].ObjectValue;
+                        }
+                        else if (dataType == typeof(Slider))
+                        {
+                            var slider = xamlObject as Slider;
+                            slider.Value = (double)config.Configs[i].ObjectValue;
+                        }
+                        else if (dataType == typeof(Image))
+                        {
+
+                            var image = xamlObject as Image;
+                            image.Tag = config.Configs[i].ObjectValue;
+                        }
+                        else
+                        {
+                            Debug.Error("Cant find Object in Dictionary: " + config.Configs[i].XamlObjectName);
+                        }
+
                     }
                     else
                     {
-                        Debug.Error("Error while loading Object: " + config.Configs[i].ObjectType);
+                        Debug.Error("Error while loading Object: " + config.Configs[i].XamlObjectName);
                     }
-
                 }
-
             }
+            catch (Exception e)
+            {
+                //todo fileformat checking
+                Debug.Error("ucp.cfg is maybe old fileformat: " + e.Message);
+            }
+            
+
+            
         }
 
         #region Debug
@@ -153,19 +197,19 @@ namespace UCP.Data
             foreach (var item in _xamlObjects)
             {
                 newConfig.Configs[c].XamlObjectName = item.Key;
-                newConfig.Configs[c].ObjectType = item.Value.GetType();
-                if (newConfig.Configs[c].ObjectType == typeof(CheckBox))
+               
+                if (item.Value.GetType() == typeof(CheckBox))
                 {
                     var checkbox = item.Value as CheckBox;
                     if (checkbox.IsChecked.HasValue) newConfig.Configs[c].ObjectValue = checkbox.IsChecked.Value;
                     else newConfig.Configs[c].ObjectValue = false;
                 }
-                else if (newConfig.Configs[c].ObjectType == typeof(Slider))
+                else if (item.Value.GetType() == typeof(Slider))
                 {
                     var slider = item.Value as Slider;
                     newConfig.Configs[c].ObjectValue = slider.Value;
-                }//todo ColorBlock
-                else if (newConfig.Configs[c].ObjectType == typeof(Image))
+                }
+                else if (item.Value.GetType() == typeof(Image))
                 {
                     var image = item.Value as Image;
                     newConfig.Configs[c].ObjectValue = image.Tag;

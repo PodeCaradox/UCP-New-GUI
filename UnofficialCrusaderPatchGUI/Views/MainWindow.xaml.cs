@@ -19,6 +19,7 @@ using System.Windows.Media;
 using UCP.Structs;
 using System.Windows.Forms;
 using Application = System.Windows.Application;
+using static UCP.Helper.GithubDownloader;
 
 namespace UCP
 {
@@ -68,22 +69,41 @@ namespace UCP
             this.Title = string.Format("{0} {1}",Utility.GetText("Name"), Version.PatcherVersion);
 
             InitializeComponent();
-            
 
 
 
+            _vm.LoadConfig(Directory.GetCurrentDirectory()+"\\ucp.cfg");
             //TextReferencer.SetText(linkLabel, Localization.Get("ui_welcometext"));
 
             //var asm = System.Reflection.Assembly.GetExecutingAssembly();
             //using (Stream stream = asm.GetManifestResourceStream("UCP.license.txt"))
             //using (StreamReader sr = new StreamReader(stream))
             //    linkLabel.Inlines.Add("\n\n\n\n\n\n" + sr.ReadToEnd());
+
+           
+            test();
+          
         }
 
-      
+        private async void test()
+        {
+            try
+            {
+                var checker = new GithubDownloader("Sh0wdown", "UnofficialCrusaderPatch", null); // uses your Application.ProductVersion
+                UpdateType update = await checker.CheckUpdate();
+                if (update != UpdateType.None)
+                {
+                        checker.DownloadAsset("Converter.zip"); // opens it in the user's browser
+                    
+                }
+            }
+            catch (Exception e)
+            {
 
-
-       
+                
+            }
+           
+        }
 
         private void NewPath(object sender, CustomEventArgs e)
         {

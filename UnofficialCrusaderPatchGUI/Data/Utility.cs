@@ -32,6 +32,8 @@ namespace UCP
             return dummy.ToString();
         }
 
+      
+
         public static String CheckCrusaderPath()
         {
             if (!Directory.Exists(Configuration.Path))
